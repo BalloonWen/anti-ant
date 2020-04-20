@@ -1,0 +1,61 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ant-app" basedir=".">
+	
+  	<!-- set global properties for this build -->
+	<property file = "build.properties" />
+	
+	<!-- adding downloaded dependencies to classpath -->
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar"></fileset>
+	</path>
+	<path id="application" location="${jar.dir}/${ant.project.name}.jar"/>
+
+	<!-- cleaning directory -->
+  	<target name="clean">
+    	<tstamp/>
+  		<delete dir="${build.dir}"></delete>
+  	</target>
+	
+	<!-- resolve dependencies from maven central -->
+	<target name="resolve">
+		<ivy:retrieve/>
+	</target>
+	
+	<!-- compile app source code -->
+	<target name="compile">
+    	<tstamp/>
+		<mkdir dir="${classes.dir}"/>
+  		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+	</target>
+	
+	<!-- creating jar file -->
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>			
+	</target>
+	
+	<!-- run unit testing with junit -->
+	<target name="junit">
+		<junit printsummary="yes">
+			<classpath>
+				<path refid="classpath"/>
+				<path refid="application"/>
+			</classpath>
+			
+			<batchtest>
+				<fileset dir="${src.dir}" includes="**/*Test.java"></fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<!-- run app -->
+	<target name="run">
+		<java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+	</target>
+	
+	<target name="main" depends="clean,resolve,compile,jar,run"></target>
+	<target name="test" depends="clean,junit"></target>
+</project>

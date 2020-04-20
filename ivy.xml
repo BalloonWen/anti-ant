@@ -1,0 +1,8 @@
+<ivy-module version="2.0">
+    <info organisation="com.dannel" module="some-math"/>
+    <dependencies>
+        <dependency org="junit" name="junit" rev="4.12">
+        	<artifact name="junit" type="jar" />
+        </dependency>
+    </dependencies>
+</ivy-module>
