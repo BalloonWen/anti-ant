@@ -2,7 +2,7 @@ pipeline {
 	agent any;
 	tools {
 		jdk 'jdk-1.8'
-		ant 'ant-10.7'
+		ant 'ant-1.10'
 	}
 	environment {
 	    BUILDFILE = "build.xml"
