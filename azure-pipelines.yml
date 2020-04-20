@@ -15,13 +15,21 @@ steps:
   inputs:
     workingDirectory: ''
     buildFile: 'build.xml'
+    targets: 'main'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml'
+    publishJUnitResults: false
 - task: Bash@3
   displayName: "Confirm Jar binary"
   inputs:
     targetType: 'inline'
     script: 'find build'
+- task: Ant@1
+  displayName: "Unit Test with Apache Ant"
+  inputs:
+    buildFile: 'build.xml'
+    targets: 'test'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
