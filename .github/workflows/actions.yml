@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  apache-ant-build:
 
     runs-on: ubuntu-latest
 
