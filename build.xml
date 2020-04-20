@@ -1,4 +1,4 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ant-app" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ant-app" basedir="." default="main">
 	
   	<!-- set global properties for this build -->
 	<property file = "build.properties" />
