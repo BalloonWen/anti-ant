@@ -17,11 +17,12 @@
 	
 	<!-- set up apache ivy -->
 	<target name="setup">
+		<mkdir dir="${user.home}/.ant/lib"/>
 		<get src="${ivy.jar.url}" dest="${user.home}/.ant/lib/ivy.jar"/>
 		<path id="ivy.lib.path">
 			<fileset dir="${user.home}/.ant/lib" includes="*.jar"></fileset>
 		</path>
-		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org:apache.ivy.ant" classpathref="ivy.lib.path"></taskdef>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"></taskdef>
 	</target>
 	
 	<!-- resolve dependencies from maven central -->
