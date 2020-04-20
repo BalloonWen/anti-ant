@@ -22,5 +22,7 @@ jobs:
         java-version: 1.8
     - name: Build with Ant
       run: ant -f build.xml main
+    - name: Check Jar Binary
+      run: find build
     - name: Unit Test with Ant
       run: ant -f build.xml test
