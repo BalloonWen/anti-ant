@@ -17,6 +17,13 @@ pipeline {
 	    	steps {
 	    	    sh  label: 'Unit test with Apache Ant', script: "ant -f $BUILDFILE test"
 	    	    junit '**/TEST-*.xml'
+
+	    	    step([$class: 'JacocoPublisher',
+                      execPattern: '*.exec',
+                      classPattern: '**/*.classes',
+                      sourcePattern: 'src/app',
+                      exclusionPattern: '**/*Test*'
+                ])
 	    	}
 	    }
 	}

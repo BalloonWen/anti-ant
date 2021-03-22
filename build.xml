@@ -1,5 +1,9 @@
-<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ant-app" basedir="." default="main">
-	
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ant-app" basedir="." default="main" xmlns:jacoco="antlib:org.jacoco.ant">
+
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="lib/jacocoant.jar"/>
+	</taskdef>
+
   	<!-- set global properties for this build -->
 	<property file = "build.properties" />
 	
@@ -50,19 +54,20 @@
 	<!-- run unit testing with junit -->
 	<target name="junit" depends="jar">
 		<mkdir dir="${junit.dir}"/>
-		<junit printsummary="yes">
-			<classpath>
-				<path refid="classpath"/>
-				<path refid="application"/>
-			</classpath>
-			
-			<formatter type="xml"/>
-			
-			<batchtest todir="${junit.dir}">
-				<fileset dir="${src.dir}" includes="**/*Test.java"/>
-			</batchtest>
-		</junit>
-		
+		<jacoco:coverage destfile="jacoco.exec">
+			<junit printsummary="yes" haltonfailure="false" fork="yes" forkmode="once">
+				<classpath>
+					<path refid="classpath"/>
+					<path refid="application"/>
+				</classpath>
+
+				<formatter type="xml"/>
+
+				<batchtest todir="${junit.dir}">
+					<fileset dir="${src.dir}" includes="**/*Test.java"/>
+				</batchtest>
+			</junit>
+		</jacoco:coverage>
 		<junitreport todir="${junit.dir}">
 			<fileset dir="${junit.dir}" includes="TEST-*.xml"/>
 			<report todir="${junit.dir}"/>
