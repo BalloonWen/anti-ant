@@ -20,8 +20,9 @@ pipeline {
 
 	    	    step([$class: 'JacocoPublisher',
                       execPattern: '*.exec',
-                      classPattern: '**/*.classes',
-                      sourcePattern: 'src/app',
+                      classPattern: '**/classes',
+                      sourcePattern: 'src',
+                      inclusionPattern: '**/*.class',
                       exclusionPattern: '**/*Test*'
                 ])
 	    	}

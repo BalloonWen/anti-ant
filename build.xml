@@ -54,7 +54,7 @@
 	<!-- run unit testing with junit -->
 	<target name="junit" depends="jar">
 		<mkdir dir="${junit.dir}"/>
-		<jacoco:coverage destfile="jacoco.exec">
+		<jacoco:coverage destfile="jacoco.exec" id="">
 			<junit printsummary="yes" haltonfailure="false" fork="yes" forkmode="once">
 				<classpath>
 					<path refid="classpath"/>
@@ -67,6 +67,7 @@
 					<fileset dir="${src.dir}" includes="**/*Test.java"/>
 				</batchtest>
 			</junit>
+
 		</jacoco:coverage>
 		<junitreport todir="${junit.dir}">
 			<fileset dir="${junit.dir}" includes="TEST-*.xml"/>
